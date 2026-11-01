@@ -112,6 +112,15 @@ kbd{font-family:var(--display);background:var(--panel2);border:1px solid var(--l
 .sub{font-family:var(--display);font-size:15px;color:var(--fog);margin-top:4px}
 select{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:7px 8px;font:inherit;max-width:100%}
 .mission{font-size:13px;color:var(--fog)}
+.ops{display:grid;gap:8px}
+.op{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:8px 10px;display:grid;gap:6px;font-size:13px}
+.op-head{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.op-head b{font-size:14px;margin-right:4px}
+.mchip{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:3px 8px;font-size:13px}
+.mchip i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.mchip button{background:none;border:0;color:var(--fog);font-size:15px;line-height:1;padding:0 2px;cursor:pointer}
+.op .btn{padding:6px 10px;font-size:13px}
+.opauto{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--fog)}
 .forecast{font-size:14px;border-left:3px solid var(--sangre);padding:6px 10px;background:#1f1a1c}
 .depart{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px}
 
@@ -312,9 +321,59 @@ const ARCH=[
   {id:'kiara',short:'Kiara',squad:'chicha',name:'Kiara',w:'baquetas',perk:'Golpes muy rápidos',neg:'—',shirt:'#14a39a',hair:'#b2312b',skin:'#c58c5e',home:'estadio',spd:1.1},
   {id:'mudo',short:'El Mudo',squad:'chicha',name:'El Mudo',w:'guitarra',perk:'Hace la mitad de ruido al registrar y pelear',neg:'Nunca habla',shirt:'#7a2f2f',hair:'#111',skin:'#9b6a45',home:'cerro'},
   {id:'rosa',short:'Tía Rosa',squad:'chicha',name:'Tía Rosa',w:'escopetaR',perk:'Encuentra 50% más soles',neg:'—',shirt:'#d9752a',hair:'#3a2318',skin:'#b07a50',home:'costa'},
+  // Los Originales
+  {id:'bill',short:'Bill',squad:'l4d1',name:'Bill',w:'fusil',perk:'Veterano: mucho aguante',neg:'Lento',shirt:'#4b5a2f',hair:'#d8d8d8',skin:'#d29b72',home:'callao',hp:130,spd:0.88},
+  {id:'zoey',short:'Zoey',squad:'l4d1',name:'Zoey',w:'pistolaMira',perk:'Ágil: se mueve rápido',neg:'—',shirt:'#8a2a3a',hair:'#5a2d1a',skin:'#e0b08a',home:'centro',spd:1.18},
+  {id:'francis',short:'Francis',squad:'l4d1',name:'Francis',w:'escopeta',perk:'Duro: aguante enorme',neg:'Lento',shirt:'#2a2a2a',hair:'#111',skin:'#d2a07a',home:'cerro',hp:150,spd:0.9},
+  {id:'louis',short:'Louis',squad:'l4d1',name:'Louis',w:'subfusil',perk:'Oficinista: registra rápido',neg:'—',shirt:'#e9e4d8',hair:'#111',skin:'#8f5f3c',home:'gamarra',of:1.35},
+  // Los Sobrevivientes del Sur
+  {id:'coach',short:'Coach',squad:'l4d2',name:'Coach',w:'escopeta',perk:'Grande: mucho aguante',neg:'Lento',shirt:'#6b3fa0',hair:'#111',skin:'#7a4a2c',home:'estadio',hp:145,spd:0.88},
+  {id:'nick',short:'Nick',squad:'l4d2',name:'Nick',w:'pistolaTac',perk:'Tramposo: registra rápido',neg:'—',shirt:'#e9edf2',hair:'#2a1a12',skin:'#d6a07a',home:'centro',of:1.3},
+  {id:'rochelle',short:'Rochelle',squad:'l4d2',name:'Rochelle',w:'subfusil',perk:'Reportera: se mueve rápido',neg:'—',shirt:'#c0392b',hair:'#1a120e',skin:'#9b6a45',home:'aeropuerto',spd:1.15},
+  {id:'ellis',short:'Ellis',squad:'l4d2',name:'Ellis',w:'hacha',perk:'Mecánico: registra rápido',neg:'Habla mucho',shirt:'#3f6bd0',hair:'#6b3a1e',skin:'#e0b08a',home:'callao',of:1.3},
+  // El Escuadrón de Atlanta
+  {id:'rick',short:'Rick',squad:'twd',name:'Rick Grimes',w:'revolver',perk:'Líder: aguante y puntería',neg:'—',shirt:'#c9b78a',hair:'#3a2318',skin:'#d6a07a',home:'centro',hp:120},
+  {id:'shane',short:'Shane',squad:'twd',name:'Shane Walsh',w:'escopeta',perk:'Duro: mucho aguante',neg:'Impulsivo',shirt:'#2d3a4a',hair:'#111',skin:'#d29b72',home:'callao',hp:135},
+  {id:'daryl',short:'Daryl',squad:'twd',name:'Daryl Dixon',w:'fusil',perk:'Rastreador: rápido y silencioso al moverse',neg:'—',shirt:'#4a3a2a',hair:'#3a2318',skin:'#d6a07a',home:'cerro',spd:1.15},
+  {id:'glenn',short:'Glenn',squad:'twd',name:'Glenn Rhee',w:'machete',perk:'Repartidor: el más rápido del grupo',neg:'Poco aguante',shirt:'#c0392b',hair:'#111',skin:'#d9a377',home:'gamarra',spd:1.35,hp:85},
+  // Los Civiles de Raccoon City
+  {id:'kevin',short:'Kevin',squad:'reo',name:'Kevin Ryman',w:'pistola',perk:'Policía: mucho aguante',neg:'—',shirt:'#2d3a5a',hair:'#2a1a12',skin:'#d6a07a',home:'hospital',hp:125},
+  {id:'cindy',short:'Cindy',squad:'reo',name:'Cindy Lennox',w:'pistola',perk:'Mesera: se mueve rápido',neg:'Poco aguante',shirt:'#e88aa0',hair:'#e0c060',skin:'#e0b08a',home:'mayorista',spd:1.2,hp:85},
+  {id:'mark',short:'Mark',squad:'reo',name:'Mark Wilkins',w:'escopeta',perk:'Guardia: aguante enorme',neg:'Lento',shirt:'#4b5a2f',hair:'#d8d8d8',skin:'#7a4a2c',home:'estadio',hp:155,spd:0.85},
+  {id:'jimc',short:'Jim C.',squad:'reo',name:'Jim Chapman',w:'fierro',perk:'Del metro: registra muy rápido',neg:'—',shirt:'#3f6bd0',hair:'#111',skin:'#7a4a2c',home:'sjl',of:1.45},
+  // Los Pasajeros del Vagón
+  {id:'seokwoo',short:'Seok-woo',squad:'busan',name:'Seok-woo',w:'bate',perk:'Ejecutivo: registra rápido',neg:'—',shirt:'#2a2f3a',hair:'#111',skin:'#e0b890',home:'sjl',of:1.3},
+  {id:'sanghwa',short:'Sang-hwa',squad:'busan',name:'Sang-hwa',w:'bate',perk:'Puños de acero: aguante enorme',neg:'Lento',shirt:'#5b6470',hair:'#111',skin:'#d6a07a',home:'estadio',hp:160,spd:0.88},
+  {id:'suan',short:'Su-an',squad:'busan',name:'Su-an',w:'pistola',perk:'Niña: muy rápida',neg:'Poco aguante',shirt:'#e9c0c8',hair:'#111',skin:'#e8c4a0',home:'centro',spd:1.3,hp:70},
+  {id:'seongkyeong',short:'Seong-kyeong',squad:'busan',name:'Seong-kyeong',w:'lanza',perk:'Valiente: se mueve rápido',neg:'—',shirt:'#e6d6a0',hair:'#111',skin:'#e8c4a0',home:'costa',spd:1.1},
+  // El Cuartel de Escape
+  {id:'leon',short:'Leon',squad:'re2',name:'Leon S. Kennedy',w:'pistolaTac',perk:'Novato de la policía: mucho aguante',neg:'—',shirt:'#2d3a5a',hair:'#c9a060',skin:'#e0b890',home:'centro',hp:125},
+  {id:'claire',short:'Claire',squad:'re2',name:'Claire Redfield',w:'subfusil',perk:'Motociclista: se mueve rápido',neg:'—',shirt:'#b2312b',hair:'#7a2f2f',skin:'#e0b890',home:'gamarra',spd:1.18},
+  {id:'ada',short:'Ada',squad:'re2',name:'Ada Wong',w:'pistolaMira',perk:'Espía: rápida y registra rápido',neg:'—',shirt:'#c0392b',hair:'#111',skin:'#e8c4a0',home:'aeropuerto',spd:1.12,of:1.2},
+  {id:'sherry',short:'Sherry',squad:'re2',name:'Sherry Birkin',w:'pistola',perk:'Niña: muy rápida',neg:'Poco aguante',shirt:'#e9c0c8',hair:'#e0c060',skin:'#e8c4a0',home:'lab',spd:1.3,hp:70},
+  // El Escuadrón de Cuarentena
+  {id:'joel',short:'Joel',squad:'tlou',name:'Joel',w:'revolver',perk:'Contrabandista: mucho aguante',neg:'—',shirt:'#6b5a3a',hair:'#5a4a3a',skin:'#d29b72',home:'callao',hp:130},
+  {id:'ellie',short:'Ellie',squad:'tlou',name:'Ellie',w:'pistola',perk:'Ágil: muy rápida',neg:'Poco aguante',shirt:'#6b7b3a',hair:'#6b3a1e',skin:'#e0b890',home:'hospital',spd:1.25,hp:80},
+  {id:'tess',short:'Tess',squad:'tlou',name:'Tess',w:'pistolaTac',perk:'Contrabandista: registra rápido',neg:'—',shirt:'#4a3a2a',hair:'#6b3a1e',skin:'#e0b890',home:'centro',of:1.3},
+  {id:'tommy',short:'Tommy',squad:'tlou',name:'Tommy',w:'fusil',perk:'Ex soldado: mucho aguante',neg:'—',shirt:'#2d3a4a',hair:'#3a2318',skin:'#d29b72',home:'cerro',hp:130},
+  // El Grupo de Asalto a Las Vegas
+  {id:'scott',short:'Scott',squad:'aotd',name:'Scott Ward',w:'fusil',perk:'Mercenario: aguante enorme',neg:'Lento',shirt:'#3b4a2d',hair:'#111',skin:'#d6a07a',home:'aeropuerto',hp:155,spd:0.9},
+  {id:'maria',short:'Maria',squad:'aotd',name:'Maria Cruz',w:'subfusil',perk:'Mecánica: registra rápido',neg:'—',shirt:'#5b6470',hair:'#111',skin:'#b98058',home:'callao',of:1.3},
+  {id:'vanderohe',short:'Vanderohe',squad:'aotd',name:'Vanderohe',w:'escopeta',perk:'Filósofo con escopeta: mucho aguante',neg:'Lento',shirt:'#e9e4d8',hair:'#111',skin:'#7a4a2c',home:'mayorista',hp:140,spd:0.9},
+  {id:'kate',short:'Kate',squad:'aotd',name:'Kate Ward',w:'pistola',perk:'Voluntaria: se mueve rápido',neg:'—',shirt:'#7fc8c0',hair:'#2a1a12',skin:'#d6a07a',home:'hospital',spd:1.18},
+  // Los Refugiados de la Abadía
+  {id:'jim28',short:'Jim',squad:'days28',name:'Jim',w:'fierro',perk:'Mensajero: muy rápido',neg:'Poco aguante',shirt:'#5b6470',hair:'#3a2318',skin:'#e0b890',home:'hospital',spd:1.3,hp:85},
+  {id:'selena',short:'Selena',squad:'days28',name:'Selena',w:'machete',perk:'Implacable: rápida y dura',neg:'—',shirt:'#2d3a4a',hair:'#111',skin:'#7a4a2c',home:'centro',spd:1.15,hp:110},
+  {id:'markd',short:'Mark',squad:'days28',name:'Mark',w:'machete',perk:'Superviviente: mucho aguante',neg:'—',shirt:'#4a3a2a',hair:'#2a1a12',skin:'#d29b72',home:'sjl',hp:120},
+  {id:'hannah',short:'Hannah',squad:'days28',name:'Hannah',w:'bate',perk:'Joven: se mueve rápido',neg:'Poco aguante',shirt:'#e88aa0',hair:'#6b3a1e',skin:'#e0b890',home:'costa',spd:1.2,hp:80},
+  // El Escuadrón de Seattle
+  {id:'ellie2',short:'Ellie (Seattle)',squad:'tlou2',name:'Ellie (Seattle)',w:'machete',perk:'Sigilosa: rápida y registra rápido',neg:'—',shirt:'#3a4a3a',hair:'#6b3a1e',skin:'#e0b890',home:'cerro',spd:1.18,of:1.15},
+  {id:'dina',short:'Dina',squad:'tlou2',name:'Dina',w:'pistola',perk:'Exploradora: registra muy rápido',neg:'—',shirt:'#4a3a5a',hair:'#111',skin:'#d6a07a',home:'mayorista',of:1.4},
+  {id:'jesse',short:'Jesse',squad:'tlou2',name:'Jesse',w:'fusil',perk:'Patrullero: mucho aguante',neg:'—',shirt:'#2d3a5a',hair:'#111',skin:'#d29b72',home:'estadio',hp:125},
+  {id:'tommy2',short:'Tommy (Seattle)',squad:'tlou2',name:'Tommy (Seattle)',w:'fusil',perk:'Francotirador: aguante enorme',neg:'Lento',shirt:'#4b5a2f',hair:'#7a6a5a',skin:'#d29b72',home:'callao',hp:145,spd:0.9},
 ];
 const ARCHBY=Object.fromEntries(ARCH.map(a=>[a.id,a]));
-const SQUADS={bus:{n:'Los del Último Bus',m:['teodoro','yesenia','chato','mili']},condor:{n:'Unidad Cóndor',m:['ines','toro','lucia','rocco']},chicha:{n:'Los Chicha Rebelde',m:['pocho','kiara','mudo','rosa']}};
+const SQUADS={bus:{n:'Los del Último Bus',m:['teodoro','yesenia','chato','mili']},condor:{n:'Unidad Cóndor',m:['ines','toro','lucia','rocco']},chicha:{n:'Los Chicha Rebelde',m:['pocho','kiara','mudo','rosa']},l4d1:{n:'Los Originales',m:['bill','zoey','francis','louis']},l4d2:{n:'Los Sobrevivientes del Sur',m:['coach','nick','rochelle','ellis']},twd:{n:'El Escuadrón de Atlanta',m:['rick','shane','daryl','glenn']},reo:{n:'Los Civiles de Raccoon City',m:['kevin','cindy','mark','jimc']},busan:{n:'Los Pasajeros del Vagón',m:['seokwoo','sanghwa','suan','seongkyeong']},re2:{n:'El Cuartel de Escape',m:['leon','claire','ada','sherry']},tlou:{n:'El Escuadrón de Cuarentena',m:['joel','ellie','tess','tommy']},aotd:{n:'El Grupo de Asalto a Las Vegas',m:['scott','maria','vanderohe','kate']},days28:{n:'Los Refugiados de la Abadía',m:['jim28','selena','markd','hannah']},tlou2:{n:'El Escuadrón de Seattle',m:['ellie2','dina','jesse','tommy2']}};
 const NOVATOS=['Jhonatan','Milagros','Kevin','Yuli','Brayan','Katherine','Piero','Fiorella','Renzo','Luz Marina','Anthony','Sheyla'];
 const SHIRTS=['#4a7fb5','#b5524a','#5a9a5a','#b59a4a','#8a5ab5','#4ab5a8','#b57a4a','#777'];
 
@@ -459,6 +518,7 @@ function rollFlags(){
     if(n.d>=2&&Math.random()<.16+G.day*.01)f.boss=true;
     G.flags[n.id]=f;
   });
+  rollOffers();
   // que un mismo superviviente no aparezca en dos puntos
   const seen=new Set();
   NODES.forEach(n=>{const r=G.flags[n.id].rescue;if(r){const k=r.uid?'u'+r.uid:r.id;if(seen.has(k))delete G.flags[n.id].rescue;else seen.add(k);}});
@@ -475,6 +535,132 @@ function turretCost(){return (has('cambista')?11:15);}
 function foodNeed(){const alive=G.roster.filter(s=>s.status!=='muerto').length;return Math.max(1,alive-(has('abuelita')?2:0));}
 function hordeSize(day){return 8+day*5;}
 function gasNight(){return Math.ceil(G.faces.reduce((a,b)=>a+b,0)/3);}
+
+// ---------- misiones paralelas en grupo ----------
+const SIDEOPS=[
+  {id:'ronda',n:'Ronda por el barrio',d:'Revisar casas cercanas. Sirve para cualquiera.',min:1,max:3,risk:0,days:1,loot:{soles:2,chatarra:2,comida:2,gasolina:1},amt:[4,7]},
+  {id:'farmacia',n:'Farmacia del jirón',d:'Botiquines y comida enlatada.',min:1,max:2,risk:0,days:1,loot:{comida:3,soles:1},amt:[5,9]},
+  {id:'chatarreria',n:'Chatarrería de Tacora',d:'Fierros para muros y armas. Pesa: mejor entre varios.',min:2,max:3,risk:1,days:2,loot:{chatarra:4,soles:1},amt:[10,16]},
+  {id:'grifo',n:'Grifo abandonado',d:'Bidones de gasolina, si siguen ahí.',min:2,max:3,risk:1,days:2,loot:{gasolina:4,soles:1},amt:[8,13]},
+  {id:'mercado',n:'Mercado de Surquillo',d:'Mucha comida y muchos infectados.',min:2,max:3,risk:1,days:2,loot:{comida:4,soles:1},amt:[10,16]},
+  {id:'familia',n:'Familia atrapada',d:'Piden ayuda por radio. Si salen bien, alguien se une al grupo.',min:2,max:3,risk:1,days:2,loot:{comida:2,soles:1},amt:[3,6],recruit:true},
+  {id:'banco',n:'Bóveda del banco',d:'Soles a montones detrás de una reja.',min:3,max:4,risk:2,days:3,loot:{soles:5,chatarra:1},amt:[18,28]},
+  {id:'cuartel',n:'Cuartel abandonado',d:'Armas y planos. Va en serio.',min:3,max:4,risk:2,days:3,loot:{chatarra:3,soles:2,gasolina:1},amt:[16,24],plano:.45},
+];
+const SIDEBY=Object.fromEntries(SIDEOPS.map(o=>[o.id,o]));
+const RISKN=['bajo','medio','alto'];
+function rollOffers(){G.offers=[{id:'ronda',m:[]}].concat(shuffle(SIDEOPS.filter(o=>o.id!=='ronda')).slice(0,3).map(o=>({id:o.id,m:[]})));}
+function opOf(uid){return (G.offers||[]).find(o=>o.m.some(x=>x.u===uid));}
+function freeForOps(){return G.roster.filter(s=>s.status==='base'&&!G.squadSel.has(s.uid)&&!opOf(s.uid));}
+function squadBond(ss){const c={};ss.forEach(s=>{if(s.squad)c[s.squad]=(c[s.squad]||0)+1;});return Object.values(c).some(v=>v>=2);}
+function teamCount(bys){return new Set(bys.filter(b=>b!=='IA')).size;}
+function opChance(op,ss,team,risk){
+  if(!ss.length)return 0;if(risk==null)risk=op.risk;
+  const lv=ss.reduce((a,s)=>a+s.lvl,0)/ss.length;
+  let c=[.8,.62,.45][risk]+lv*.03+Math.max(0,ss.length-op.min)*.07+(team>=2?.08:0)+(squadBond(ss)?.1:0)-ss.filter(s=>s.wounded).length*.08;
+  if(ss.length<op.min)c-=.25;
+  return clamp(c,.1,.95);
+}
+function byLabel(b){return b==='IA'?'IA':coopOn()?ownerNick(b):'Tú';}
+function byColor(b){return b==='IA'?'#9aa3ad':ownerColor(b);}
+function cleanOffers(){(G.offers||[]).forEach(o=>{o.m=o.m.filter(x=>{const s=G.roster.find(r=>r.uid===x.u);return s&&s.status==='base'&&!G.squadSel.has(s.uid);}).slice(0,SIDEBY[o.id].max);});}
+function departOp(i){
+  const o=G.offers[i];if(!o)return false;const op=SIDEBY[o.id];
+  const ss=o.m.map(x=>G.roster.find(s=>s.uid===x.u)).filter(s=>s&&s.status==='base');
+  if(ss.length<op.min)return false;
+  ss.forEach(s=>{s.status='mision';G.squadSel.delete(s.uid);});
+  G.missions.push({op:op.id,ss,team:teamCount(o.m.map(x=>x.by)),risk:op.risk,days:op.days,ai:o.m.every(x=>x.by==='IA')});
+  o.m=[];o.sent=true;return true;
+}
+// La IA arma grupos con los que quedan libres (deja a 2 en la base) y los manda.
+function aiFormGroups(){
+  const healthy=freeForOps().filter(s=>!s.wounded).sort((a,b)=>b.lvl-a.lvl);
+  const keep=Math.min(2,healthy.length);let pool=healthy.slice(0,healthy.length-keep);
+  const strong=pool.length&&pool.reduce((a,s)=>a+s.lvl,0)/pool.length>=3;
+  const order=G.offers.map((o,i)=>i).filter(i=>!G.offers[i].sent).sort((a,b)=>{const A=G.offers[a],Bo=G.offers[b];
+    if(!!A.m.length!==!!Bo.m.length)return Bo.m.length-A.m.length;const ra=SIDEBY[A.id].risk,rb=SIDEBY[Bo.id].risk;return strong?rb-ra:ra-rb;});
+  let n=0;
+  order.forEach(i=>{const o=G.offers[i];const op=SIDEBY[o.id];
+    // la IA va en grupo: mínimo 2 si la misión lo permite, y uno más si sobra gente
+    let target=Math.max(op.min,Math.min(op.max,2));
+    if(pool.length-(target-o.m.length)>=2&&target<op.max)target++;
+    let take=Math.max(0,target-o.m.length);
+    if(take>pool.length)take=Math.max(0,op.min-o.m.length);
+    if(take>pool.length||(!take&&!o.m.length)||(o.m.length+take<2&&op.max>=2))return;
+    pool.splice(0,take).forEach(s=>o.m.push({u:s.uid,by:'IA'}));});
+  G.offers.forEach((o,i)=>{if(!o.sent&&o.m.length&&o.m.length>=SIDEBY[o.id].min&&departOp(i))n++;});
+  return n;
+}
+// Al terminar el día, salen los grupos que ya están completos.
+function endDayOps(){
+  let n=0;if(G.autoAI)n+=aiFormGroups();
+  G.offers.forEach((o,i)=>{if(!o.sent&&o.m.length>=SIDEBY[o.id].min&&departOp(i))n++;});
+  return n?[[`${n} grupo${n>1?'s':''} salió a una misión paralela.`,'']]:[];
+}
+function opAction(c,by){
+  if(!G||!G.offers)return;const i=c.o|0;const o=G.offers[i];
+  if(c.a==='add'&&o&&!o.sent){const s=freeForOps().find(x=>x.uid===(c.u|0));if(s&&o.m.length<SIDEBY[o.id].max)o.m.push({u:s.uid,by});}
+  else if(c.a==='out'&&o){o.m=o.m.filter(x=>x.u!==(c.u|0));}
+  else if(c.a==='send'&&o)departOp(i);
+  else if(c.a==='ai')aiFormGroups();
+}
+function opsData(){
+  cleanOffers();
+  return {offers:G.offers.map(o=>{const op=SIDEBY[o.id];const ss=o.m.map(x=>G.roster.find(s=>s.uid===x.u)).filter(Boolean);const team=teamCount(o.m.map(x=>x.by));
+      return {id:o.id,sent:!!o.sent,team,bond:squadBond(ss)?1:0,ch:Math.round(opChance(op,ss,team)*100),m:o.m.map(x=>{const s=G.roster.find(r=>r.uid===x.u);return [x.u,s?(s.short||s.name):'?',byLabel(x.by),byColor(x.by)];})};}),
+    free:freeForOps().map(s=>[s.uid,s.short||s.name,s.lvl,s.wounded?1:0]),
+    miss:G.missions.map(m=>{const op=SIDEBY[m.op]||SIDEBY.ronda;return [op.id,m.ss.map(s=>s.short||s.name).join(', '),m.days,Math.round(opChance(op,m.ss,m.team,m.risk)*100),m.ai?1:0,m.team];}),
+    auto:!!G.autoAI};
+}
+function opsHTML(D,guest){
+  const offers=(D.offers||[]).map((o,i)=>{const op=SIDEBY[o.id];if(!op)return '';
+    const lw=Object.entries(op.loot).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([k])=>RES[k].n.toLowerCase());if(op.plano)lw.push('planos');const loot=lw.length>1?lw.slice(0,-1).join(', ')+' y '+lw[lw.length-1]:lw[0];
+    if(o.sent)return `<div class="op"><div class="op-head"><b>${esc(op.n)}</b><span class="flag">Ya salió un grupo hoy</span></div></div>`;
+    const m=o.m||[];const ready=m.length>=op.min;
+    const chips=m.map(x=>`<span class="mchip"><i style="background:${/^#[0-9a-f]{3,6}$/i.test(x[3])?x[3]:'#888'}"></i>${esc(String(x[1]).slice(0,20))}${x[2]&&x[2]!=='Tú'?` <span class="muted">· ${esc(String(x[2]).slice(0,16))}</span>`:''}<button data-opout="${i}" data-u="${x[0]|0}" aria-label="Quitar">×</button></span>`).join('');
+    const free=(D.free||[]);
+    return `<div class="op">
+      <div class="op-head"><b>${esc(op.n)}</b><span class="flag">Riesgo ${RISKN[op.risk]}</span><span class="flag">${op.min===op.max?op.min:`${op.min}–${op.max}`} persona${op.max>1?'s':''}</span><span class="flag">${op.days} día${op.days>1?'s':''}</span>${o.team>=2?'<span class="flag cash">Equipo de jugadores +8%</span>':''}${o.bond?'<span class="flag cash">Escuadrón unido +10%</span>':''}</div>
+      <span class="muted">${esc(op.d)} Botín: ${loot}.</span>
+      ${chips?`<div class="row">${chips}</div>`:''}
+      <div class="row">${m.length<op.max?`<select data-opadd="${i}" aria-label="Añadir a ${esc(op.n)}"><option value="">${free.length?'Añadir a…':'Nadie libre'}</option>${free.map(f=>`<option value="${f[0]|0}">${esc(String(f[1]).slice(0,20))} (nv. ${f[2]|0}${f[3]?', herido':''})</option>`).join('')}</select>`:''}
+      <button class="btn ${ready?'go':''}" data-opsend="${i}" ${ready?'':'disabled'}>${ready?`Enviar grupo · éxito ~${o.ch|0}%`:`Faltan ${op.min-m.length}`}</button></div>
+    </div>`;}).join('');
+  const miss=(D.miss||[]).map(x=>{const op=SIDEBY[x[0]]||SIDEBY.ronda;return `<div class="mission">${x[4]?'IA · ':''}${esc(op.n)}: ${esc(String(x[1]).slice(0,120))} · vuelven en ${x[2]|0} día${x[2]>1?'s':''} · éxito ~${x[3]|0}%</div>`;}).join('');
+  return `<div class="muted" style="font-size:13px">Arma grupos con los que no salen en la combi. En grupo hay más éxito y más botín, y si les va mal se cubren entre ellos. Si dos o más jugadores ponen gente en la misma misión, suman +8% por trabajo en equipo. Dos o más del mismo escuadrón juntos: +10%.</div>
+    <div class="ops">${offers}</div>
+    <div class="row"><button class="btn" data-opai="1">La IA arma y envía grupos</button></div>
+    ${guest?'':`<label class="opauto"><input type="checkbox" id="op-auto" ${D.auto?'checked':''}> Cada día, al terminar, la IA arma grupos con los que quedan libres (siempre deja 2 en la base).</label>`}
+    ${miss||'<div class="mission">Nadie está en misión ahora.</div>'}`;
+}
+function resolveOp(m){
+  const op=SIDEBY[m.op]||SIDEBY.ronda;const risk=m.risk!=null?m.risk:op.risk;
+  const ss=m.ss.filter(s=>s.status==='mision');if(!ss.length)return [];
+  const names=ss.map(s=>s.name);const who=names.length>1?names.slice(0,-1).join(', ')+' y '+names[names.length-1]:names[0];
+  const ch=opChance(op,ss,m.team,risk);const lines=[];
+  if(Math.random()<ch){
+    const extra=Math.max(0,ss.length-op.min);
+    const amt=Math.round(ri(op.amt[0],op.amt[1])*(1+.2*extra)*(m.team>=2?1.15:1));
+    const bag=[];Object.entries(op.loot).forEach(([k,w])=>{for(let j=0;j<w;j++)bag.push(k);});
+    const parts={};for(let i=0;i<amt;i++){const k=pick(bag);parts[k]=(parts[k]||0)+1;G.res[k]++;}
+    ss.forEach(s=>{s.status='base';s.xp+=3+risk*3+(ss.length>1?1:0);levelCheck(s);});
+    let txt=`${ss.length>1?'El grupo de ':''}${who} volvió de ${op.n}: `+Object.entries(parts).map(([k,v])=>`+${v} ${RES[k].n.toLowerCase()}`).join(', ');
+    if((op.plano&&Math.random()<op.plano)||(!op.plano&&risk===2&&Math.random()<.3)){G.weap=Math.min(6,G.weap+1);META.planos++;saveMeta();txt+=' y un plano de arma';}
+    lines.push([txt+'.','good']);
+    if(op.recruit){const ni=G.pool.findIndex(a=>!a.squad&&!ARCHBY[a.id]);const s=mkSurv(ni>=0?G.pool.splice(ni,1)[0]:mkNovato());G.roster.push(s);lines.push([`${s.name} se unió al grupo.`,'good']);}
+    if(risk>=1&&ss.length>1&&Math.random()<.2){const h=pick(ss);h.wounded=true;lines.push([`${h.name} volvió herido, pero cumplieron.`,'bad']);}
+  }else if(ss.length===1){
+    const s=ss[0];
+    if(Math.random()<.5){s.status='base';s.wounded=true;lines.push([`${s.name} volvió herido y con las manos vacías.`,'bad']);}
+    else{s.status='desaparecido';G.missing.push(s);lines.push([`${s.name} no volvió. Quizás aparezca pidiendo ayuda en algún punto (!).`,'bad']);}
+  }else{
+    ss.forEach(s=>{s.status='base';s.xp+=1;levelCheck(s);});
+    const hurt=shuffle(ss.slice()).slice(0,ri(1,Math.min(2,ss.length-1)));hurt.forEach(s=>s.wounded=true);
+    lines.push([`${op.n} salió mal. ${who} volvieron sin botín; ${hurt.map(s=>s.name).join(' y ')} salió herido cubriendo a los demás.`,'bad']);
+    if(risk>=2&&Math.random()<.35){const l=pick(hurt);l.status='desaparecido';G.missing.push(l);lines.push([`${l.name} se quedó atrás. Quizás aparezca pidiendo ayuda en algún punto (!).`,'bad']);}
+  }
+  return lines;
+}
 
 // =============================================================
 //  PANTALLAS
@@ -514,7 +700,8 @@ function renderBase(){
   saveRun();hostScreen({k:'base'});
   const el=$('#scr-base');
   const avail=G.roster.filter(s=>s.status==='base');
-  [...G.squadSel].forEach(u=>{if(!avail.some(s=>s.uid===u))G.squadSel.delete(u);});
+  [...G.squadSel].forEach(u=>{if(!avail.some(s=>s.uid===u)||opOf(u))G.squadSel.delete(u);});
+  if(!G.offers)rollOffers();cleanOffers();
   const node=G.sel?NODEBY[G.sel]:null;
   const nextRed=[5,10,15,20].find(n=>n>=G.day);
   const r=G.res;
@@ -556,12 +743,8 @@ function renderBase(){
           <button class="btn" id="b-buygas" ${r.soles<12?'disabled':''}>3 gasolina · 12 soles</button>
           <button class="btn" id="b-sellscrap" ${r.chatarra<6?'disabled':''}>Vender 6 chatarra · +8 soles</button>
         </div>
-        <div class="sub">Misiones paralelas</div>
-        <div class="row">
-          <select id="mis-who" aria-label="Superviviente para la misión">${avail.filter(s=>!G.squadSel.has(s.uid)).map(s=>`<option value="${s.uid}">${esc(s.name)} (nv. ${s.lvl})</option>`).join('')||'<option value="">Nadie libre</option>'}</select>
-          <button class="btn" data-mis="0">Riesgo bajo</button><button class="btn" data-mis="1">Medio</button><button class="btn warn" data-mis="2">Alto</button>
-        </div>
-        ${G.missions.length?G.missions.map(m=>`<div class="mission">${esc(m.s.name)} vuelve en ${m.days} día${m.days>1?'s':''} · riesgo ${['bajo','medio','alto'][m.risk]}</div>`).join(''):'<div class="mission">Manda a alguien solo a una zona secundaria. Vuelve en 2 días con botín… o no vuelve.</div>'}
+        <div class="sub">Misiones paralelas en grupo</div>
+        ${opsHTML(opsData(),false)}
       </div>
       <div class="panel">
         <div class="panel-head"><h2>Armería</h2><span class="tag">Planos conocidos: ${META.planos}</span></div>
@@ -615,11 +798,11 @@ function nodeCard(n){
 }
 function survCard(s){
   const a=ARCHBY[s.arch];
-  const dead=s.status==='muerto';const busy=s.status==='mision';
+  const dead=s.status==='muerto';const busy=s.status==='mision';const ap=!dead&&!busy&&opOf(s.uid);
   const pressed=G.squadSel.has(s.uid);
-  const st=dead?'<span class="state hurt">Muerto</span>':busy?'<span class="state mis">En misión</span>':s.wounded?'<span class="state hurt">Herido · −30% vida</span>':'<span class="state">Listo</span>';
+  const st=dead?'<span class="state hurt">Muerto</span>':busy?'<span class="state mis">En misión</span>':ap?`<span class="state mis">Apuntado: ${esc(SIDEBY[ap.id].n)}</span>`:s.wounded?'<span class="state hurt">Herido · −30% vida</span>':'<span class="state">Listo</span>';
   const heal=s.wounded&&!dead&&!busy?`<span data-heal="${s.uid}" role="button" tabindex="0" style="text-decoration:underline;color:var(--combi);font-size:12px">Curar (${has('lucia')?'gratis':'2 comida'})</span>`:'';
-  return `<button class="card ${dead||busy?'off':''}" data-surv="${s.uid}" aria-pressed="${pressed}" ${dead||busy?'disabled':''}>
+  return `<button class="card ${dead||busy||ap?'off':''}" data-surv="${s.uid}" aria-pressed="${pressed}" ${dead||busy||ap?'disabled':''}>
     <img src="${survCanvas(s)}" alt="" width="28" height="36" style="image-rendering:pixelated;flex:none">
     <span class="who"><b>${esc(s.name)}</b><span class="muted num">Nv. ${s.lvl} · ${WEAPONS[s.w].n} · ${hpMax(s)} vida</span>
     ${s.perk?`<span class="perk">${esc(s.perk)}</span>`:''}${s.neg&&s.neg!=='—'?`<span class="neg">${esc(s.neg)}</span>`:''}
@@ -634,19 +817,23 @@ $('#scr-base').addEventListener('click',e=>{
   const sv=t.closest('[data-surv]');if(sv&&!sv.disabled){const u=+sv.dataset.surv;
     if(G.squadSel.has(u))G.squadSel.delete(u);else if(G.squadSel.size<squadMax())G.squadSel.add(u);renderBase();return;}
   const w=t.closest('[data-wall]');if(w&&!w.disabled){const f=+w.dataset.wall;const c=wallCost(f);if(G.res.chatarra>=c){G.res.chatarra-=c;G.faces[f]++;}renderBase();return;}
-  const m=t.closest('[data-mis]');if(m){const who=+$('#mis-who').value;const s=G.roster.find(x=>x.uid===who);
-    if(s&&s.status==='base'){s.status='mision';G.squadSel.delete(s.uid);G.missions.push({s,risk:+m.dataset.mis,days:2});}renderBase();return;}
+  const oo=t.closest('[data-opout]');if(oo){opAction({a:'out',o:+oo.dataset.opout,u:+oo.dataset.u},'host');renderBase();return;}
+  const os=t.closest('[data-opsend]');if(os&&!os.disabled){opAction({a:'send',o:+os.dataset.opsend},'host');renderBase();return;}
+  if(t.closest('[data-opai]')){opAction({a:'ai'},'host');renderBase();return;}
   if(t.closest('#b-weap')){const c=weapCost();if(G.res.chatarra>=c){G.res.chatarra-=c;G.weap++;}renderBase();return;}
   if(t.closest('#b-buyfood')){if(G.res.soles>=10){G.res.soles-=10;G.res.comida+=4;}renderBase();return;}
   if(t.closest('#b-buygas')){if(G.res.soles>=12){G.res.soles-=12;G.res.gasolina+=3;}renderBase();return;}
   if(t.closest('#b-sellscrap')){if(G.res.chatarra>=6){G.res.chatarra-=6;G.res.soles+=8;}renderBase();return;}
   const cr=t.closest('[data-craft]');if(cr&&!cr.disabled){const r=CRAFT.find(x=>x.k===cr.dataset.craft);if(r&&canPay(r.c)&&(r.pl||0)<=META.planos){Object.entries(r.c).forEach(([k,v])=>G.res[k]-=v);G.arsenal.push(r.k);}renderBase();return;}
   if(t.closest('#b-menu')){saveRun();renderTitle();show('scr-title');return;}
-  if(t.closest('#b-stay')){goNight([['Nadie salió hoy. El grupo descansó en la base.','']]);return;}
-  if(t.closest('#b-go')){const n=NODEBY[G.sel];const c=gasCost(n);if(G.res.gasolina<c)return;G.res.gasolina-=c;
+  if(t.closest('#b-stay')){const ol=endDayOps();goNight([['Nadie salió hoy en la combi. El grupo descansó en la base.','']].concat(ol));return;}
+  if(t.closest('#b-go')){const n=NODEBY[G.sel];const c=gasCost(n);if(G.res.gasolina<c)return;G.res.gasolina-=c;endDayOps();
     const squad=G.roster.filter(s=>G.squadSel.has(s.uid));startExpedition(n,squad);return;}
 });
-$('#scr-base').addEventListener('change',e=>{const sel=e.target.closest('[data-equip]');if(!sel||!sel.value)return;
+$('#scr-base').addEventListener('change',e=>{
+  const oa=e.target.closest('[data-opadd]');if(oa){if(oa.value)opAction({a:'add',o:+oa.dataset.opadd,u:+oa.value},'host');renderBase();return;}
+  if(e.target.id==='op-auto'){G.autoAI=e.target.checked;renderBase();return;}
+  const sel=e.target.closest('[data-equip]');if(!sel||!sel.value)return;
   const sv=G.roster.find(x=>x.uid===+sel.dataset.equip);const i=G.arsenal.indexOf(sel.value);
   if(sv&&i>=0){G.arsenal.splice(i,1);G.arsenal.push(sv.w);sv.w=sel.value;}renderBase();});
 $('#scr-base').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('[data-node],[data-heal]')){e.preventDefault();e.target.click();}});
@@ -694,18 +881,7 @@ function dawn(){
     v.forEach(s=>s.wounded=true);lines.push([`Faltó comida: ${v.map(s=>s.name).join(', ')||'nadie'} se debilitó.`,'bad']);}
   // misiones
   G.missions.forEach(m=>{m.days--;});
-  G.missions.filter(m=>m.days<=0).forEach(m=>{
-    const s=m.s;const chance=[.85,.65,.45][m.risk]+s.lvl*.03;
-    if(Math.random()<chance){
-      const amt=[ri(4,8),ri(8,14),ri(14,22)][m.risk];const parts={};
-      for(let i=0;i<amt;i++){const k=pick(['soles','soles','chatarra','gasolina','comida']);parts[k]=(parts[k]||0)+1;G.res[k]++;}
-      s.status='base';s.xp+=3+m.risk*3;levelCheck(s);
-      let txt=`${s.name} volvió de su misión: `+Object.entries(parts).map(([k,v])=>`+${v} ${RES[k].n.toLowerCase()}`).join(', ');
-      if(m.risk===2&&Math.random()<.3){G.weap=Math.min(6,G.weap+1);META.planos++;saveMeta();txt+=' y un plano de arma';}
-      lines.push([txt+'.','good']);
-    }else if(Math.random()<.5){s.status='base';s.wounded=true;lines.push([`${s.name} volvió herido y con las manos vacías.`,'bad']);}
-    else{s.status='desaparecido';G.missing.push(s);lines.push([`${s.name} no volvió. Quizás aparezca pidiendo ayuda en algún punto (!).`,'bad']);}
-  });
+  G.missions.filter(m=>m.days<=0).forEach(m=>{lines.push(...resolveOp(m));});
   G.missions=G.missions.filter(m=>m.days>0);
   G.roster=G.roster.filter(s=>s.status!=='desaparecido');
   if(!G.roster.some(s=>s.status==='base'||s.status==='mision')){gameOver('No queda nadie en el grupo.');return;}
@@ -1765,7 +1941,7 @@ function leaveRoom(msg){
 function hostScreen(scr){if(NET.role!=='host')return;NET.screen=scr;sendScreen();}
 function sendScreen(){
   if(NET.role!=='host'||!NET.screen)return;let d=NET.screen;
-  if(d.k==='base'&&G)d={k:'base',day:G.day,res:G.res,people:G.roster.filter(s=>s.status!=='muerto').map(s=>[s.short||s.name,s.status==='mision'?1:0,s.wounded?1:0]).slice(0,18)};
+  if(d.k==='base'&&G)d={k:'base',day:G.day,res:G.res,people:G.roster.filter(s=>s.status!=='muerto').map(s=>[s.short||s.name,s.status==='mision'?1:0,s.wounded?1:0]).slice(0,18),ops:opsData()};
   NET.room.emit('screen',d).catch(()=>{});
 }
 function resendAll(){if(NET.role!=='host')return;if(B&&!B.ended&&!$('#scr-battle').hidden){emitMap();}else sendScreen();}
@@ -1810,6 +1986,7 @@ function hostSnap(dt){
   NET.room.emit('snap',d).catch(()=>{});
 }
 function applyCmd(peer,c){
+  if(c&&c.t==='op'){if(G&&!$('#scr-base').hidden&&['add','out','send','ai'].includes(c.a))opAction(c,peer);return;}
   if(!B||B.ended||$('#scr-battle').hidden)return;
   const own=(Array.isArray(c.ids)?c.ids:[]).map(i=>B.units[i|0]).filter(u=>u&&u.owner===peer&&u.state==='ok').slice(0,6);
   const x=+c.x,y=+c.y;
@@ -1828,7 +2005,7 @@ function guestScreen(d){
   if(d.k==='base'){const res=d.res||{};
     const chips=Object.entries(RES).map(([k,v])=>`<span class="chip num"><i style="background:${v.c}"></i>${v.n} ${+res[k]||0}</span>`).join('');
     const ppl=(Array.isArray(d.people)?d.people:[]).map(p=>`<span class="chip">${esc(String(p[0]).slice(0,24))}${p[1]?' · en misión':''}${p[2]?' · herido':''}</span>`).join('');
-    showWait(`Día ${+d.day||1} · En la base`,'El anfitrión está preparando la salida. Cuando salgan, entras con tus supervivientes.',`<div class="res">${chips}</div><div class="res">${ppl}</div>`);}
+    showWait(`Día ${+d.day||1} · En la base`,'El anfitrión está preparando la salida. Cuando salgan, entras con tus supervivientes. Mientras, puedes armar misiones paralelas con el grupo.',`<div class="res">${chips}</div><div class="res">${ppl}</div>${d.ops&&typeof d.ops==='object'?`<div class="sub">Misiones paralelas en grupo</div>${opsHTML(d.ops,true)}`:''}`);}
   else if(d.k==='report'){
     $('#rep-tag').textContent=String(d.tag||'').slice(0,60);$('#rep-title').textContent=String(d.title||'').slice(0,80);$('#rep-sub').textContent=String(d.sub||'').slice(0,200);
     $('#rep-lines').innerHTML=(Array.isArray(d.lines)?d.lines:[]).slice(0,20).map(l=>`<li class="${['good','bad','gold',''].includes(l[1])?l[1]:''}">${esc(String(l[0]).slice(0,200))}</li>`).join('');
@@ -1901,6 +2078,11 @@ function guestUpdate(dt){
     if(s.length&&camScale()>camFit()*1.01){const mx=s.reduce((a,u)=>a+u.x,0)/s.length,my=s.reduce((a,u)=>a+u.y,0)/s.length;B.cam.x+=(mx-B.cam.x)*Math.min(1,dt*3);B.cam.y+=(my-B.cam.y)*Math.min(1,dt*3);}}
   clampCam();
 }
+$('#scr-wait').addEventListener('click',e=>{if(!isGuest())return;const t=e.target;
+  const oo=t.closest('[data-opout]');if(oo){sendCmd({t:'op',a:'out',o:+oo.dataset.opout,u:+oo.dataset.u});return;}
+  const os=t.closest('[data-opsend]');if(os&&!os.disabled){sendCmd({t:'op',a:'send',o:+os.dataset.opsend});return;}
+  if(t.closest('[data-opai]'))sendCmd({t:'op',a:'ai'});});
+$('#scr-wait').addEventListener('change',e=>{if(!isGuest())return;const oa=e.target.closest('[data-opadd]');if(oa&&oa.value)sendCmd({t:'op',a:'add',o:+oa.dataset.opadd,u:+oa.value});});
 function sendCmd(c){if(!NET.room)return;c.seq=++NET.seq;NET.room.presence({role:'guest',nick:NET.nick,cmd:c}).catch(()=>{});}
 function guestClick(wx,wy,forceMove,shift){
   const hit=B.units.find(u=>u.state!=='dead'&&Math.hypot(u.x-wx,u.y-6-wy)<11);
@@ -1927,7 +2109,8 @@ function saveRun(){
     const data={v:1,day:G.day,base:G.base,res:G.res,faces:G.faces,weap:G.weap,planosRun:G.planosRun,
       roster:G.roster.map(clean),missing:G.missing.map(clean),
       pool:G.pool.map(a=>ARCHBY[a.id]===a?{k:'arch',id:a.id}:{k:'nov',a}),
-      missions:G.missions.map(m=>({uid:m.s.uid,risk:m.risk,days:m.days})),
+      missions:G.missions.map(m=>({op:m.op,uids:m.ss.map(s=>s.uid),team:m.team,ai:!!m.ai,risk:m.risk,days:m.days})),
+      offers:(G.offers||[]).map(o=>({id:o.id,m:o.m,sent:!!o.sent})),autoAI:!!G.autoAI,
       flags:Object.fromEntries(Object.entries(G.flags).map(([k,f])=>[k,{cash:f.cash,plano:!!f.plano,boss:!!f.boss,rescue:refOf(f.rescue)}])),
       rescued:[...G.rescued],uid:UID,arsenal:G.arsenal};
     localStorage.setItem(SAVE_KEY,JSON.stringify(data));
@@ -1944,7 +2127,8 @@ function loadRun(d){
     if(r){if(r.k==='arch')rescue=ARCHBY[r.id];else if(r.k==='nov')rescue=pool.find(a=>a.id===r.id)||null;else rescue=findMiss(r.uid)||null;}
     flags[k]={cash:true,plano:f.plano,boss:f.boss};if(rescue)flags[k].rescue=rescue;});
   G={day:d.day,base:d.base,res:d.res,faces:d.faces,weap:d.weap,roster,pool,missing,
-    missions:d.missions.map(m=>({s:roster.find(s=>s.uid===m.uid),risk:m.risk,days:m.days})).filter(m=>m.s),
+    missions:d.missions.map(m=>({op:SIDEBY[m.op]?m.op:'ronda',ss:(m.uids||[m.uid]).map(u=>roster.find(s=>s.uid===u)).filter(Boolean),team:m.team|0,ai:!!m.ai,risk:m.risk|0,days:m.days})).filter(m=>m.ss.length),
+    offers:Array.isArray(d.offers)?d.offers.filter(o=>SIDEBY[o.id]).map(o=>({id:o.id,sent:!!o.sent,m:(o.m||[]).filter(x=>x&&roster.some(s=>s.uid===x.u))})):null,autoAI:!!d.autoAI,
     flags,arsenal:(d.arsenal||[]).filter(k=>WEAPONS[k]),sel:null,squadSel:new Set(),rescued:new Set(d.rescued),planosRun:d.planosRun||0,log:[],score:0};
   UID=Math.max(d.uid||1,...roster.map(s=>s.uid+1),...missing.map(s=>s.uid+1));
 }
